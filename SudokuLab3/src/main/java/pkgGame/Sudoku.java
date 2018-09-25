@@ -249,4 +249,31 @@ public class Sudoku extends LatinSquare {
 	public boolean isValidValue(int iCol, int iRow, int iValue) {
 		return false;
 	}
+	
+	public int getRegionNbr(int iCol, int iRow) {
+		
+	}
+	
+	public void PrintPuzzle() {
+		
+	}
+	
+	private void SetRegion() {
+		
+	}
+	
+	private void shuffleArray(int[] ar) {
+		
+	}
+	
+	private void ShuffleRegion(int r) {
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 }
