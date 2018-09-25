@@ -1,5 +1,7 @@
 package pkgGame;
 
+import java.util.Arrays;
+
 import pkgHelper.LatinSquare;
 
 /**
@@ -255,7 +257,13 @@ public class Sudoku extends LatinSquare {
 	}
 	
 	public void PrintPuzzle() {
-		
+		for (int iRow = 0; iRow < iSize; iRow++) {
+			System.out.println(Arrays.toString(getRow(iRow)));
+		}
+	}
+	
+	public void FillDiagonalRegions() {
+
 	}
 	
 	private void SetRegion() {
