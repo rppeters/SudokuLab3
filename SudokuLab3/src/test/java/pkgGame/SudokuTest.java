@@ -6,8 +6,20 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-public class SudokuTest {
+import pkgGame.Sudoku;
 
+public class SudokuTest {
+	
+	private int[][] solvedPuzzle = {{5,3,4,6,7,8,9,1,2},
+			{6,7,2,1,9,5,3,4,8},
+			{1,9,8,3,4,2,5,6,7},
+			{8,5,9,7,6,1,4,2,3},
+			{4,2,6,8,5,3,7,9,1},
+			{7,1,3,9,2,4,8,5,6},
+			{9,6,1,5,3,7,2,8,4},
+			{2,8,7,4,1,9,6,3,5},
+			{3,4,5,2,8,6,1,7,9}};
+	
 	@Test
 	public void Sudoku_Test1() {
 
@@ -230,5 +242,102 @@ public class SudokuTest {
 		}
 		
 	}	
-
+	
+	@Test 
+	public void getRegionNbr_Test() throws Exception {
+		int[][] puzzle = {{1,2,3,4},
+				{1,2,3,4},
+				{1,2,3,4},
+				{1,2,3,4}};
+		
+		Sudoku s1 = new Sudoku(puzzle);
+		int reg2 = s1.getRegionNbr(1, 3);
+		assertEquals(2, reg2);
+		
+		int reg1 = s1.getRegionNbr(3, 0);
+		assertEquals(1, reg1);
+		
+		int[][] puzzle3x3 = { { 5, 3, 4, 6, 7, 8, 9, 1, 2 }, { 6, 7, 2, 1, 9, 5, 3, 4, 8 }, { 1, 9, 8, 3, 4, 2, 5, 6, 7 },
+				{ 8, 5, 9, 7, 6, 1, 4, 2, 3 }, { 4, 2, 6, 8, 5, 3, 7, 9, 1 }, { 7, 1, 3, 9, 2, 4, 8, 5, 6 },
+				{ 9, 6, 1, 5, 3, 7, 2, 8, 4 }, { 2, 8, 7, 4, 1, 9, 6, 3, 5 }, { 3, 4, 5, 2, 8, 6, 1, 7, 9 } };
+		
+		Sudoku s2 = new Sudoku(puzzle3x3);
+		int reg7 = s2.getRegionNbr(4, 6);
+		assertEquals(7, reg7);
+		
+	}
+	
+	@Test
+	public void FillDiagonalRegions_Test() throws Exception {
+		
+		int[][] emptyPuzzle = {{0,0,0,0},
+				{0,0,0,0},
+				{0,0,0,0},
+				{0,0,0,0}};
+		
+		Sudoku s1 = new Sudoku(emptyPuzzle);
+		s1.FillDiagonalRegions();
+		s1.PrintPuzzle();
+		
+		int[][] emptyPuzzle3x3 = {{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0}};
+		
+		Sudoku s2 = new Sudoku(emptyPuzzle3x3);
+		s2.FillDiagonalRegions();
+		s2.PrintPuzzle();
+	}
+	
+	@Test
+	public void SetRegion_Test() throws Exception {
+		Sudoku s = new Sudoku(solvedPuzzle);
+		
+		s.SetRegion(0);
+		
+		//System.out.println("REGION TEST" + Arrays.toString(s.getRegion(0)));
+	}
+	
+	
+	@Test 
+	public void shuffleArray_Test( ) throws Exception{
+		int[][] puzzle = {{1,2,3,4},
+				{1,2,3,4},
+				{1,2,3,4},
+				{1,2,3,4}};
+		
+		Sudoku s1 = new Sudoku(puzzle);
+		int[] myArr = {1,2,3,4};
+		s1.shuffleArray(myArr);
+		
+		//System.out.println("SHUFFLE" + Arrays.toString(myArr));
+		
+	}
+	
+	@Test
+	public void ShuffleRegion_Test() throws Exception {
+		int[][] puzzle = {{1,2,3,4},
+				{1,2,3,4},
+				{1,2,3,4},
+				{1,2,3,4}};
+		Sudoku s1 = new Sudoku(puzzle);
+		s1.ShuffleRegion(0);
+		
+		System.out.println("SHUFFLE REGION");
+		s1.PrintPuzzle();
+		
+		System.out.println("SHUFFLE REGION");
+	
+	}
+	
+	
+	
+	
+	
+	
 }

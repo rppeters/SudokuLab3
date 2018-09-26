@@ -1,6 +1,8 @@
 package pkgGame;
 
-import java.util.Arrays;
+import java.util.*;
+
+import org.apache.commons.lang.ArrayUtils;
 
 import pkgHelper.LatinSquare;
 
@@ -253,7 +255,7 @@ public class Sudoku extends LatinSquare {
 	}
 	
 	public int getRegionNbr(int iCol, int iRow) {
-		
+		return ((iCol / iSqrtSize) + (iRow / iSqrtSize) * iSqrtSize);
 	}
 	
 	public void PrintPuzzle() {
@@ -263,19 +265,61 @@ public class Sudoku extends LatinSquare {
 	}
 	
 	public void FillDiagonalRegions() {
+		for (int regNbr = 0; regNbr < iSize; regNbr += (iSqrtSize + 1)) {
+			SetRegion(regNbr);
+			ShuffleRegion(regNbr);
+		}
+		
 
 	}
 	
-	private void SetRegion() {
+	public void SetRegion(int r) {
+		int[][] tempArr = getPuzzle();
+		int j = (r % iSqrtSize) * iSqrtSize;
+		int i = (r / iSqrtSize) * iSqrtSize;
+		int jMax = j + iSqrtSize;
+		int iMax = i + iSqrtSize;
+		int iCnt = 1;
+
+		for (; i < iMax; i++) {
+			for (j = (r % iSqrtSize) * iSqrtSize; j < jMax; j++) {
+				tempArr[i][j] = iCnt++;
+			}
+		}
 		
+		super.setLatinSquare(tempArr);
 	}
 	
-	private void shuffleArray(int[] ar) {
+	public void shuffleArray(int[] ar) {
+		List<Integer> tempArr = new ArrayList<Integer>();
+		for (int i : ar) {
+			tempArr.add(i);
+		}
+		Collections.shuffle(tempArr);
 		
+		for (int i = 0; i < tempArr.size(); i++) {
+			ar[i] = (int)tempArr.get(i);
+		}
 	}
 	
-	private void ShuffleRegion(int r) {
+	public void ShuffleRegion(int r) {
+		int[] tempArr = getRegion(r);
+		shuffleArray(tempArr);
 		
+		int[][] tempPuzzle = getPuzzle();
+		int j = (r % iSqrtSize) * iSqrtSize;
+		int i = (r / iSqrtSize) * iSqrtSize;
+		int jMax = j + iSqrtSize;
+		int iMax = i + iSqrtSize;
+		int iCnt = 0;
+
+		for (; i < iMax; i++) {
+			for (j = (r % iSqrtSize) * iSqrtSize; j < jMax; j++) {
+				tempPuzzle[i][j] = tempArr[iCnt++];
+			}
+		}
+		
+		super.setLatinSquare(tempPuzzle);
 	}
 	
 	
