@@ -246,6 +246,8 @@ public class SudokuTest {
 	
 	@Test 
 	public void getRegionNbr_Test() throws Exception {
+		
+		//test with 4x4 ordered puzzle
 		int[][] puzzle = {{1,2,3,4},
 				{1,2,3,4},
 				{1,2,3,4},
@@ -259,9 +261,15 @@ public class SudokuTest {
 		assertEquals(1, reg1);
 		
 		//test with larger puzzle(9x9)
-		int[][] puzzle3x3 = { { 5, 3, 4, 6, 7, 8, 9, 1, 2 }, { 6, 7, 2, 1, 9, 5, 3, 4, 8 }, { 1, 9, 8, 3, 4, 2, 5, 6, 7 },
-				{ 8, 5, 9, 7, 6, 1, 4, 2, 3 }, { 4, 2, 6, 8, 5, 3, 7, 9, 1 }, { 7, 1, 3, 9, 2, 4, 8, 5, 6 },
-				{ 9, 6, 1, 5, 3, 7, 2, 8, 4 }, { 2, 8, 7, 4, 1, 9, 6, 3, 5 }, { 3, 4, 5, 2, 8, 6, 1, 7, 9 } };
+		int[][] puzzle3x3 = { { 5, 3, 4, 6, 7, 8, 9, 1, 2 }, 
+				{ 6, 7, 2, 1, 9, 5, 3, 4, 8 }, 
+				{ 1, 9, 8, 3, 4, 2, 5, 6, 7 },
+				{ 8, 5, 9, 7, 6, 1, 4, 2, 3 }, 
+				{ 4, 2, 6, 8, 5, 3, 7, 9, 1 },
+				{ 7, 1, 3, 9, 2, 4, 8, 5, 6 },
+				{ 9, 6, 1, 5, 3, 7, 2, 8, 4 }, 
+				{ 2, 8, 7, 4, 1, 9, 6, 3, 5 },
+				{ 3, 4, 5, 2, 8, 6, 1, 7, 9 }};
 		
 		Sudoku s2 = new Sudoku(puzzle3x3);
 		int reg7 = s2.getRegionNbr(4, 6);
@@ -278,12 +286,11 @@ public class SudokuTest {
 				{0,0,0,0},
 				{0,0,0,0}};
 		
-		int[] emptyRegion = {0,0,0,0};
+		int[] expectedUnfilledRegion2x2 = {0,0,0,0};
 		Sudoku s1 = new Sudoku(emptyPuzzle);
-		s1.FillDiagonalRegions();
-
-		assertArrayEquals(s1.getRegion(1), emptyRegion);
-		assertArrayEquals(s1.getRegion(2), emptyRegion);
+		s1.FillDiagonalRegions(); 
+		assertArrayEquals(s1.getRegion(1), expectedUnfilledRegion2x2);
+		assertArrayEquals(s1.getRegion(2), expectedUnfilledRegion2x2);
 		
 		//test with larger empty 9x9 puzzle
 		int[][] emptyPuzzle9x9 = {{0,0,0,0,0,0,0,0,0},
@@ -298,9 +305,9 @@ public class SudokuTest {
 		
 		Sudoku s2 = new Sudoku(emptyPuzzle9x9);
 		s2.FillDiagonalRegions();
-		int[] expectedUnfilledArray = {0,0,0,0,0,0,0,0,0};
-		assertArrayEquals(s2.getRegion(1), expectedUnfilledArray);
-		assertArrayEquals(s2.getRegion(5), expectedUnfilledArray);
+		int[] expectedUnfilledRegion3x3 = {0,0,0,0,0,0,0,0,0};
+		assertArrayEquals(s2.getRegion(1), expectedUnfilledRegion3x3);
+		assertArrayEquals(s2.getRegion(5), expectedUnfilledRegion3x3);
 		
 	}
 	
@@ -334,17 +341,39 @@ public class SudokuTest {
 	
 	@Test 
 	public void shuffleArray_Test() throws Exception{
-		int[][] puzzle = {{1,2,3,4},
-				{1,2,3,4},
-				{1,2,3,4},
-				{1,2,3,4}};
+		//understanding that the tests could fail on the CHANCE that the array shuffles to its original state
+		int[][] puzzle = {{1,2,3,4,5,6,7,8,9},
+				{1,2,3,4,5,6,7,8,9},
+				{1,2,3,4,5,6,7,8,9},
+				{1,2,3,4,5,6,7,8,9},
+				{1,2,3,4,5,6,7,8,9},
+				{1,2,3,4,5,6,7,8,9},
+				{1,2,3,4,5,6,7,8,9},
+				{1,2,3,4,5,6,7,8,9},
+				{1,2,3,4,5,6,7,8,9}};
 		
+		//test with 
 		Sudoku s1 = new Sudoku(puzzle);
-		int[] myArr = {1,2,3,4};
+		int[] myArr = {1,2,3,4,5,6,7,8,9};
+		int[] myArrUnshuffled = {1,2,3,4,5,6,7,8,9};
+		assertTrue(Arrays.equals(myArr, myArrUnshuffled));
 		s1.shuffleArray(myArr);
+		assertFalse(Arrays.equals(myArr, myArrUnshuffled));
 		
-		//System.out.println("SHUFFLE" + Arrays.toString(myArr));
+		//test with different size arrays and only one noticeably changed element
+		int[] myArr2 = {0,0,0,0,1,0,0};
+		int[] myArr2Unshuffled = {0,0,0,0,1,0,0};
+		assertTrue(Arrays.equals(myArr2, myArr2Unshuffled));
+		s1.shuffleArray(myArr2);
+		assertFalse(Arrays.equals(myArr2, myArr2Unshuffled));
 		
+		//test shuffling both arrays w
+		int[] myArr3 = {0,1,2,3,4,5};
+		int[] myArr4 = {0,1,2,3,4,5};
+		assertTrue(Arrays.equals(myArr3, myArr4));
+		s1.shuffleArray(myArr3);
+		s1.shuffleArray(myArr4);
+		assertFalse(Arrays.equals(myArr3, myArr4));
 	}
 	
 	@Test
@@ -355,8 +384,12 @@ public class SudokuTest {
 				{1,2,3,4}};
 		Sudoku s1 = new Sudoku(puzzle);
 		s1.ShuffleRegion(0);
-		//System.out.println("SHUFFLE REGION");
-		//s1.PrintPuzzle();
+		int[] expectedRegion0 = {1,2,1,2};
+		int[] expectedRegion1 = {3,4,3,4};
+		//make sure the region gets shuffled
+		assertFalse(Arrays.equals(s1.getRegion(0), expectedRegion0));
+		//make sure it only shuffles the correct region
+		assertTrue(Arrays.equals(s1.getRegion(1), expectedRegion1));
 	}
 	
 	
