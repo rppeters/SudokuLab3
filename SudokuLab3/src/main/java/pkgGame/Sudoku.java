@@ -253,7 +253,21 @@ public class Sudoku extends LatinSquare {
 	 * @return - returns 'true' if the proposed value is valid for the row and column
 	 */
 	public boolean isValidValue(int iCol, int iRow, int iValue) {
-		return false;
+		
+		if (doesElementExist(super.getRow(iRow),iValue))
+		{
+			return false;
+		}
+		if (doesElementExist(super.getColumn(iCol),iValue))
+		{
+			return false;
+		}
+		if (doesElementExist(this.getRegion(iCol, iRow),iValue))
+		{
+			return false;
+		}
+		
+		return true;
 	}
 	
 	public int getRegionNbr(int iCol, int iRow) {
@@ -271,8 +285,6 @@ public class Sudoku extends LatinSquare {
 			SetRegion(regNbr);
 			ShuffleRegion(regNbr);
 		}
-		
-
 	}
 	
 	public void SetRegion(int r) {
@@ -307,8 +319,8 @@ public class Sudoku extends LatinSquare {
 	public void ShuffleRegion(int r) {
 		int[] tempArr = getRegion(r);
 		shuffleArray(tempArr);
-		
 		int[][] tempPuzzle = getPuzzle();
+		
 		int j = (r % iSqrtSize) * iSqrtSize;
 		int i = (r / iSqrtSize) * iSqrtSize;
 		int jMax = j + iSqrtSize;
