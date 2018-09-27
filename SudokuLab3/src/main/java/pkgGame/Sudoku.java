@@ -335,11 +335,4 @@ public class Sudoku extends LatinSquare {
 		
 		super.setLatinSquare(tempPuzzle);
 	}
-	
-	
-	
-	
-	
-	
-	
 }

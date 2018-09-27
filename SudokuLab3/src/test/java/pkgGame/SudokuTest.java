@@ -390,6 +390,25 @@ public class SudokuTest {
 		assertFalse(Arrays.equals(s1.getRegion(0), expectedRegion0));
 		//make sure it only shuffles the correct region
 		assertTrue(Arrays.equals(s1.getRegion(1), expectedRegion1));
+		
+		//test with larger puzzle
+		int[][] puzzle9x9 = {{1,2,3,4,5,6,7,8,9},
+				{1,2,3,4,5,6,7,8,9},
+				{1,2,3,4,5,6,7,8,9},
+				{1,2,3,4,5,6,7,8,9},
+				{1,2,3,4,5,6,7,8,9},
+				{1,2,3,4,5,6,7,8,9},
+				{1,2,3,4,5,6,7,8,9},
+				{1,2,3,4,5,6,7,8,9},
+				{1,2,3,4,5,6,7,8,9}};
+		Sudoku s2 = new Sudoku(puzzle9x9);
+		s2.ShuffleRegion(4);
+		int[] expectedRegion4 = {4,5,6,4,5,6,4,5,6};
+		int[] expectedRegion5 = {7,8,9,7,8,9,7,8,9};
+		//make sure the region gets shuffled
+		assertFalse(Arrays.equals(s2.getRegion(4), expectedRegion4));
+		//make sure it only shuffles the correct region
+		assertTrue(Arrays.equals(s2.getRegion(5), expectedRegion5));
 	}
 	
 	
