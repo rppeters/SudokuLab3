@@ -2,6 +2,7 @@ package pkgGame;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -58,7 +59,7 @@ public class SudokuTest {
 			Sudoku s1 = new Sudoku(puzzle);
 
 			region = s1.getRegion(1);
-			System.out.println(Arrays.toString(region));			
+			//System.out.println(Arrays.toString(region));			
 			assertTrue(Arrays.equals(ExpectedRegion, region));
 
 		} catch (Exception e) {
@@ -86,7 +87,7 @@ public class SudokuTest {
 			Sudoku s1 = new Sudoku(puzzle);
 
 			region = s1.getRegion(0,2);
-			System.out.println(Arrays.toString(region));			
+			//System.out.println(Arrays.toString(region));			
 			assertTrue(Arrays.equals(ExpectedRegion, region));
 
 		} catch (Exception e) {
@@ -257,6 +258,7 @@ public class SudokuTest {
 		int reg1 = s1.getRegionNbr(3, 0);
 		assertEquals(1, reg1);
 		
+		//test with larger puzzle(9x9)
 		int[][] puzzle3x3 = { { 5, 3, 4, 6, 7, 8, 9, 1, 2 }, { 6, 7, 2, 1, 9, 5, 3, 4, 8 }, { 1, 9, 8, 3, 4, 2, 5, 6, 7 },
 				{ 8, 5, 9, 7, 6, 1, 4, 2, 3 }, { 4, 2, 6, 8, 5, 3, 7, 9, 1 }, { 7, 1, 3, 9, 2, 4, 8, 5, 6 },
 				{ 9, 6, 1, 5, 3, 7, 2, 8, 4 }, { 2, 8, 7, 4, 1, 9, 6, 3, 5 }, { 3, 4, 5, 2, 8, 6, 1, 7, 9 } };
@@ -270,16 +272,21 @@ public class SudokuTest {
 	@Test
 	public void FillDiagonalRegions_Test() throws Exception {
 		
+		//test with 4x4 empty puzzle
 		int[][] emptyPuzzle = {{0,0,0,0},
 				{0,0,0,0},
 				{0,0,0,0},
 				{0,0,0,0}};
 		
+		int[] emptyRegion = {0,0,0,0};
 		Sudoku s1 = new Sudoku(emptyPuzzle);
 		s1.FillDiagonalRegions();
-		s1.PrintPuzzle();
+
+		assertArrayEquals(s1.getRegion(1), emptyRegion);
+		assertArrayEquals(s1.getRegion(2), emptyRegion);
 		
-		int[][] emptyPuzzle3x3 = {{0,0,0,0,0,0,0,0,0},
+		//test with larger empty 9x9 puzzle
+		int[][] emptyPuzzle9x9 = {{0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0},
@@ -289,23 +296,44 @@ public class SudokuTest {
 				{0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0}};
 		
-		Sudoku s2 = new Sudoku(emptyPuzzle3x3);
+		Sudoku s2 = new Sudoku(emptyPuzzle9x9);
 		s2.FillDiagonalRegions();
-		s2.PrintPuzzle();
+		int[] expectedUnfilledArray = {0,0,0,0,0,0,0,0,0};
+		assertArrayEquals(s2.getRegion(1), expectedUnfilledArray);
+		assertArrayEquals(s2.getRegion(5), expectedUnfilledArray);
+		
 	}
 	
 	@Test
 	public void SetRegion_Test() throws Exception {
+		
+		//test with 9x9 and a completed/filled in/solved puzzle
 		Sudoku s = new Sudoku(solvedPuzzle);
-		
 		s.SetRegion(0);
+		int[] expectedRegionPostSet = {1,2,3,4,5,6,7,8,9};
+		assertArrayEquals(s.getRegion(0), expectedRegionPostSet);
 		
-		//System.out.println("REGION TEST" + Arrays.toString(s.getRegion(0)));
+		s.SetRegion(5);
+		assertArrayEquals(s.getRegion(5), expectedRegionPostSet);
+		
+		int[] expectedRegion2 = {9,1,2,3,4,8,5,6,7};
+		assertArrayEquals(s.getRegion(2), expectedRegion2);
+		
+		//test with different empty 4x4 puzzle
+		int[][] emptyPuzzle = {{0,0,0,0},
+				{0,0,0,0},
+				{0,0,0,0},
+				{0,0,0,0}};
+		
+		Sudoku s2 = new Sudoku(emptyPuzzle);
+		s2.SetRegion(1);
+		int[] expectedRegion1 = {1,2,3,4};
+		assertArrayEquals(s2.getRegion(1), expectedRegion1);
 	}
 	
 	
 	@Test 
-	public void shuffleArray_Test( ) throws Exception{
+	public void shuffleArray_Test() throws Exception{
 		int[][] puzzle = {{1,2,3,4},
 				{1,2,3,4},
 				{1,2,3,4},
@@ -327,12 +355,8 @@ public class SudokuTest {
 				{1,2,3,4}};
 		Sudoku s1 = new Sudoku(puzzle);
 		s1.ShuffleRegion(0);
-		
-		System.out.println("SHUFFLE REGION");
-		s1.PrintPuzzle();
-		
-		System.out.println("SHUFFLE REGION");
-	
+		//System.out.println("SHUFFLE REGION");
+		//s1.PrintPuzzle();
 	}
 	
 	
