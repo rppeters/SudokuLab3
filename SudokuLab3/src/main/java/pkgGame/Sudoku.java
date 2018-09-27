@@ -2,9 +2,11 @@ package pkgGame;
 
 import java.util.*;
 
-import org.apache.commons.lang.ArrayUtils;
-
+import pkgEnum.ePuzzleViolation;
 import pkgHelper.LatinSquare;
+import pkgHelper.PuzzleViolation;
+
+import org.apache.commons.lang.ArrayUtils;
 
 /**
  * Sudoku - This class extends LatinSquare, adding methods, constructor to
