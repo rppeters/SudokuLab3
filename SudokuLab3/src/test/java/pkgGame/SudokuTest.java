@@ -409,6 +409,7 @@ public class SudokuTest {
 		assertFalse(Arrays.equals(s2.getRegion(4), expectedRegion4));
 		//make sure it only shuffles the correct region
 		assertTrue(Arrays.equals(s2.getRegion(5), expectedRegion5));
+		s2.PrintPuzzle();
 	}
 	
 	
