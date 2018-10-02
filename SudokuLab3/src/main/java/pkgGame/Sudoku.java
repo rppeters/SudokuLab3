@@ -283,14 +283,14 @@ public class Sudoku extends LatinSquare {
 		}
 	}
 	
-	public void FillDiagonalRegions() {
+	private void FillDiagonalRegions() {
 		for (int regNbr = 0; regNbr < iSize; regNbr += (iSqrtSize + 1)) {
 			SetRegion(regNbr);
 			ShuffleRegion(regNbr);
 		}
 	}
 	
-	public void SetRegion(int r) {
+	private void SetRegion(int r) {
 		int[][] tempArr = getPuzzle();
 		int j = (r % iSqrtSize) * iSqrtSize;
 		int i = (r / iSqrtSize) * iSqrtSize;
@@ -307,7 +307,7 @@ public class Sudoku extends LatinSquare {
 		super.setLatinSquare(tempArr);
 	}
 	
-	public void shuffleArray(int[] ar) {
+	private void shuffleArray(int[] ar) {
 		List<Integer> tempArr = new ArrayList<Integer>();
 		for (int i : ar) {
 			tempArr.add(i);
@@ -319,7 +319,7 @@ public class Sudoku extends LatinSquare {
 		}
 	}
 	
-	public void ShuffleRegion(int r) {
+	private void ShuffleRegion(int r) {
 		int[] tempArr = getRegion(r);
 		shuffleArray(tempArr);
 		int[][] tempPuzzle = getPuzzle();
